@@ -2,7 +2,7 @@
   "name": "chat-with-my-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "node server/server.js",
     "test": "mocha server/**/*.test.js",
