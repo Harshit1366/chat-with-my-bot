@@ -1,8 +1,8 @@
 {
-  "name": "node-chat-app",
+  "name": "chat-with-my-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server/server.js",
     "test": "mocha server/**/*.test.js",
