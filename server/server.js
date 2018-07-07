@@ -8,12 +8,14 @@ const {generateMessage, generateLocationMessage} = require('./utils/message');
 const {isRealString} = require('./utils/validation');
 
 const publicPath = path.join(__dirname, '../public');
+const viewPath = path.join(__dirname, '../views');
 const port = process.env.PORT || 3000;
 var app = express();
 var server = http.createServer(app);
 var io = socketIO(server);
 
 app.use(express.static(publicPath));
+app.use(express.static(viewPath));
 
 const apiai = require('apiai')(keys.APIAI_TOKEN);
 
@@ -28,9 +30,30 @@ io.on('connection', (socket) => {
     });
 
     apiaiReq.on('response', (response) => {
-
       console.log('Bot reply: ' + JSON.stringify(response.result.fulfillment.speech));
       socket.emit('newMessage', generateMessage('NCUBot', response.result.fulfillment.speech));
+    });
+
+    apiaiReq.on('error', (error) => {
+      console.log(error);
+    });
+
+    apiaiReq.end();
+
+  });
+
+
+  socket.on('chat message', (message) => {
+    console.log('Message: ' + message);
+
+    let apiaiReq = apiai.textRequest(message, {
+      sessionId: keys.APIAI_SESSION_ID
+    });
+
+    apiaiReq.on('response', (response) => {
+      let aiText = response.result.fulfillment.speech;
+      console.log('Bot reply: ' + aiText);
+      socket.emit('bot reply', aiText);
     });
 
     apiaiReq.on('error', (error) => {
