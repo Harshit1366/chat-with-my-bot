@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
 
     apiaiReq.on('response', (response) => {
       console.log('Bot reply: ' + JSON.stringify(response.result.fulfillment.speech));
-      socket.emit('newMessage', generateMessage('NCUBot', response.result.fulfillment.speech));
+      socket.emit('newMessage', generateMessage('MMB Admin', response.result.fulfillment.speech));
     });
 
     apiaiReq.on('error', (error) => {
@@ -66,7 +66,7 @@ io.on('connection', (socket) => {
 
 
   socket.on('join', (params, callback) => {
-    socket.emit('newMessage', generateMessage('NCUBot', 'Welcome to NCU Enquiry Bot Chat. How may I help you?'));
+    socket.emit('newMessage', generateMessage('MMB Admin', 'Welcome to MMB Enquiry Bot Chat. How may I help you?'));
     callback();
   });
 
